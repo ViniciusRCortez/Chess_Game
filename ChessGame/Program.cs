@@ -21,7 +21,7 @@ namespace ChessGame
                 T.colocarPeca(new Rei(Cor.Preta, T), new Posicao(0, 4));
                 T.colocarPeca(new Bispo(Cor.Preta, T), new Posicao(0, 5));
                 T.colocarPeca(new Cavalo(Cor.Preta, T), new Posicao(0, 6));
-                T.colocarPeca(new Torre(Cor.Preta, T), new Posicao(0, 6));
+                T.colocarPeca(new Torre(Cor.Preta, T), new Posicao(0, 7));
 
                 for (int i = 0; i < T.Linhas; i++)
                 {
