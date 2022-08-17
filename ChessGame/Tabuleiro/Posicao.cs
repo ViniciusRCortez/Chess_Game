@@ -13,6 +13,12 @@ namespace ChessGame.tabuleiro
             Coluna = coluna;
         }
 
+        public void definirValores(int linha, int coluna)
+        {
+            Linha = linha;
+            Coluna = coluna;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

@@ -19,7 +19,13 @@ namespace ChessGame
 
                     Console.Write("\n\nOrigem: ");
                     Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
-                    Console.Write("Destino: ");
+
+                    bool[,] posicoesPossiveis = partidaDeXadrez.Tab.peca(origem).movimentosPossiveis();
+
+                    Console.Clear();
+                    Tela.imprimirTabuleiro(partidaDeXadrez.Tab, posicoesPossiveis);
+
+                    Console.Write("\n\nDestino: ");
                     Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
 
                     partidaDeXadrez.executarMovimento(origem, destino);

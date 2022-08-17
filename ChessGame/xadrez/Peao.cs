@@ -8,6 +8,11 @@ namespace ChessGame.xadrez
         {
         }
 
+        public override bool[,] movimentosPossiveis()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return "P";
