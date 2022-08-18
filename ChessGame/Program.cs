@@ -17,10 +17,7 @@ namespace ChessGame
                     try
                     {
                         Console.Clear();
-                        Tela.imprimirTabuleiro(partidaDeXadrez.Tab);
-
-                        Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
-                            + $" {partidaDeXadrez.JogadorAtual}s");
+                        Tela.imprimirPartida(partidaDeXadrez);
                         Console.Write("\nOrigem: ");
                         Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
                         partidaDeXadrez.validarOrigem(origem);

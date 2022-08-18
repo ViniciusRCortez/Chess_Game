@@ -1,5 +1,6 @@
 ﻿using ChessGame.tabuleiro;
 using ChessGame.xadrez;
+using System.Collections.Generic;
 
 namespace ChessGame
 {
@@ -17,6 +18,36 @@ namespace ChessGame
                 Console.WriteLine();
             }
             Console.Write($"\n   a b c d e f g h");
+        }
+
+        public static void imprimirPartida(PartidaDeXadrez partidaDeXadrez)
+        {
+            imprimirTabuleiro(partidaDeXadrez.Tab);
+            imprimirPecasCapturadas(partidaDeXadrez);
+            Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
+                + $" {partidaDeXadrez.JogadorAtual}s");
+        }
+
+        public static void imprimirPecasCapturadas(PartidaDeXadrez partidaDeXadrez)
+        {
+            Console.Write($"\n\nPeças Capturadas:\nBrancas: ");
+            imprimirConjunto(partidaDeXadrez.pecasCapturadas(Cor.Branca));
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"\nPretas: ");
+            imprimirConjunto(partidaDeXadrez.pecasCapturadas(Cor.Preta));
+            Console.ForegroundColor = aux;
+
+        }
+
+        public static void imprimirConjunto(HashSet<Peca> conjunto)
+        {
+            Console.Write("[ ");
+            foreach (Peca x in conjunto)
+            {
+                Console.Write($"{x} ");
+            }
+            Console.Write("]");
         }
 
         public static void imprimirTabuleiro(Tabuleiro tab, bool[,] posicoesPossiveis)
