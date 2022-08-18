@@ -60,17 +60,18 @@ namespace ChessGame.xadrez
             else
             {
                 Xeque = false;
-            }
-
+            }           
             if (emXequeMate(adversaria(JogadorAtual)))
-            {
+            {  
                 Terminada = true;
             }
             else
             {
                 Turno++;
                 mudaJogador();
-            }           
+
+            }
+
         }
 
         public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
@@ -120,7 +121,7 @@ namespace ChessGame.xadrez
 
         public void validarDestino(Posicao origem, Posicao destino)
         {
-            if (!Tab.peca(origem).podeMoverPara(destino))
+            if (!Tab.peca(origem).movimentoPossivel(destino))
             {
                 throw new TabuleiroException("Posição de Destino Invalida");
             }
@@ -235,36 +236,32 @@ namespace ChessGame.xadrez
 
         private void colocarPecas()
         {
-            /*Tab.colocarPeca(new Torre(Cor.Preta, Tab), new PosicaoXadrez('a', 8).toPosicao());
-            Tab.colocarPeca(new Cavalo(Cor.Preta, Tab), new PosicaoXadrez('b', 8).toPosicao());
-            Tab.colocarPeca(new Bispo(Cor.Preta, Tab), new PosicaoXadrez('c', 8).toPosicao());
-            Tab.colocarPeca(new Rainha(Cor.Preta, Tab), new PosicaoXadrez('d', 8).toPosicao());
-            Tab.colocarPeca(new Rei(Cor.Preta, Tab), new PosicaoXadrez('e', 8).toPosicao());
-            Tab.colocarPeca(new Bispo(Cor.Preta, Tab), new PosicaoXadrez('f', 8).toPosicao());
-            Tab.colocarPeca(new Cavalo(Cor.Preta, Tab), new PosicaoXadrez('g', 8).toPosicao());
-            Tab.colocarPeca(new Torre(Cor.Preta, Tab), new PosicaoXadrez('h', 8).toPosicao());
+            colocarNovaPeca('a', 8, new Torre(Cor.Preta, Tab));
+            colocarNovaPeca('b', 8, new Cavalo(Cor.Preta, Tab));
+            colocarNovaPeca('c', 8, new Bispo(Cor.Preta, Tab));
+            colocarNovaPeca('d', 8, new Dama(Cor.Preta, Tab));
+            colocarNovaPeca('e', 8, new Rei(Cor.Preta, Tab));
+            colocarNovaPeca('f', 8, new Bispo(Cor.Preta, Tab));
+            colocarNovaPeca('g', 8, new Cavalo(Cor.Preta, Tab));
+            colocarNovaPeca('h', 8, new Torre(Cor.Preta, Tab));
 
-            Tab.colocarPeca(new Torre(Cor.Branca, Tab), new PosicaoXadrez('a', 1).toPosicao());
-            Tab.colocarPeca(new Cavalo(Cor.Branca, Tab), new PosicaoXadrez('b', 1).toPosicao());
-            Tab.colocarPeca(new Bispo(Cor.Branca, Tab), new PosicaoXadrez('c', 1).toPosicao());
-            Tab.colocarPeca(new Rainha(Cor.Branca, Tab), new PosicaoXadrez('d', 1).toPosicao());
-            Tab.colocarPeca(new Rei(Cor.Branca, Tab), new PosicaoXadrez('e', 1).toPosicao());
-            Tab.colocarPeca(new Bispo(Cor.Branca, Tab), new PosicaoXadrez('f', 1).toPosicao());
-            Tab.colocarPeca(new Cavalo(Cor.Branca, Tab), new PosicaoXadrez('g', 1).toPosicao());
-            Tab.colocarPeca(new Torre(Cor.Branca, Tab), new PosicaoXadrez('h', 1).toPosicao());
+            colocarNovaPeca('a', 1, new Torre(Cor.Branca, Tab));
+            colocarNovaPeca('b', 1, new Cavalo(Cor.Branca, Tab));
+            colocarNovaPeca('c', 1, new Bispo(Cor.Branca, Tab));
+            colocarNovaPeca('d', 1, new Dama(Cor.Branca, Tab));
+            colocarNovaPeca('e', 1, new Rei(Cor.Branca, Tab));
+            colocarNovaPeca('f', 1, new Bispo(Cor.Branca, Tab));
+            colocarNovaPeca('g', 1, new Cavalo(Cor.Branca, Tab));
+            colocarNovaPeca('h', 1, new Torre(Cor.Branca, Tab));
 
             char[] linhasLetras = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
- 
-            for (int i = 0; i < Tab.Linhas; i++)
+
+            foreach (char linha in linhasLetras)
             {
-                Tab.colocarPeca(new Peao(Cor.Preta, Tab), new PosicaoXadrez(linhasLetras[i], 7).toPosicao());
-                Tab.colocarPeca(new Peao(Cor.Branca, Tab), new PosicaoXadrez(linhasLetras[i], 2).toPosicao());
-            }*/
-            colocarNovaPeca('h', 7, new Torre(Cor.Branca, Tab));
-            colocarNovaPeca('b', 8, new Torre(Cor.Preta, Tab));
-            colocarNovaPeca('c', 1, new Torre(Cor.Branca, Tab));
-            colocarNovaPeca('d', 1, new Rei(Cor.Branca, Tab));
-            colocarNovaPeca('a', 8, new Rei(Cor.Preta, Tab));
+                colocarNovaPeca(linha, 7, new Peao(Cor.Preta, Tab));
+                colocarNovaPeca(linha, 2, new Peao(Cor.Branca, Tab));
+            }             
+
         }
     }
 }
