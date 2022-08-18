@@ -19,6 +19,12 @@
         {
             QteMovimentos++;
         }
+
+        public void decrementarQteMovimentos()
+        {
+            QteMovimentos--;
+        }
+
         protected bool podeMover(Posicao pos)
         {
             Peca p = Tabuleiro.peca(pos);

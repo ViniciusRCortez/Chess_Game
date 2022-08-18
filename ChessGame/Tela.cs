@@ -24,8 +24,21 @@ namespace ChessGame
         {
             imprimirTabuleiro(partidaDeXadrez.Tab);
             imprimirPecasCapturadas(partidaDeXadrez);
-            Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
-                + $" {partidaDeXadrez.JogadorAtual}s");
+            if (!partidaDeXadrez.Terminada)
+            {
+                Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
+               + $" {partidaDeXadrez.JogadorAtual}s");
+                if (partidaDeXadrez.Xeque)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nXEQUEMATE!!!"
+              + $"\nGanhador:Jogador das {partidaDeXadrez.JogadorAtual}s");
+            }
+           
         }
 
         public static void imprimirPecasCapturadas(PartidaDeXadrez partidaDeXadrez)

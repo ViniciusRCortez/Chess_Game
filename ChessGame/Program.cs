@@ -41,6 +41,8 @@ namespace ChessGame
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                Tela.imprimirPartida(partidaDeXadrez);
             }
             catch (TabuleiroException e)
             {
