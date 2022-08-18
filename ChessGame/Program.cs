@@ -10,34 +10,42 @@ namespace ChessGame
         {
             try
             {
-                
+
                 PartidaDeXadrez partidaDeXadrez = new PartidaDeXadrez();
                 while (!partidaDeXadrez.Terminada)
                 {
-                    Console.Clear();
-                    Tela.imprimirTabuleiro(partidaDeXadrez.Tab);
-                    
-                    Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
-                        + $" {partidaDeXadrez.JogadorAtual}s");
-                    Console.Write("\nOrigem: ");
-                    Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
-                    partidaDeXadrez.validarOrigem(origem);
+                    try
+                    {
+                        Console.Clear();
+                        Tela.imprimirTabuleiro(partidaDeXadrez.Tab);
 
-                    bool[,] posicoesPossiveis = partidaDeXadrez.Tab.peca(origem).movimentosPossiveis();
+                        Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
+                            + $" {partidaDeXadrez.JogadorAtual}s");
+                        Console.Write("\nOrigem: ");
+                        Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+                        partidaDeXadrez.validarOrigem(origem);
 
-                    Console.Clear();
-                    Tela.imprimirTabuleiro(partidaDeXadrez.Tab, posicoesPossiveis);
+                        bool[,] posicoesPossiveis = partidaDeXadrez.Tab.peca(origem).movimentosPossiveis();
 
-                    Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
-                        + $" {partidaDeXadrez.JogadorAtual}s");
-                    Console.Write("\nDestino: ");
-                    Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+                        Console.Clear();
+                        Tela.imprimirTabuleiro(partidaDeXadrez.Tab, posicoesPossiveis);
 
-                    partidaDeXadrez.realizaJogada(origem, destino);
+                        Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
+                            + $" {partidaDeXadrez.JogadorAtual}s");
+                        Console.Write("\nDestino: ");
+                        Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+                        partidaDeXadrez.validarDestino(origem, destino);
+
+                        partidaDeXadrez.realizaJogada(origem, destino);
+                    }
+                    catch (TabuleiroException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
-                
             }
-            catch(TabuleiroException e)
+            catch (TabuleiroException e)
             {
                 Console.WriteLine(e.Message);
             }

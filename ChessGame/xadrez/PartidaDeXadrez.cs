@@ -35,7 +35,6 @@ namespace ChessGame.xadrez
 
         public void realizaJogada(Posicao origem, Posicao destino)
         {
-            validarOrigem(origem);
             executarMovimento(origem, destino);
             Turno++;
             mudaJogador();
@@ -59,9 +58,26 @@ namespace ChessGame.xadrez
 
         public void validarOrigem(Posicao origem)
         {
-            if (!Tab.existePeca(origem))
+            if (Tab.peca(origem) == null)
             {
                 throw new TabuleiroException("Origem invalida, não existe peça nessa posição");
+            }
+            if (JogadorAtual != Tab.peca(origem).Cor)
+            {
+                throw new TabuleiroException($"Jogador da cor errada," +
+                    $" era esperado uma jogada das {JogadorAtual}s");
+            }
+            if (!Tab.peca(origem).existeMovimentosPossiveis())
+            {
+                throw new TabuleiroException("Peça sem movimentos possíveis");
+            }
+        }
+
+        public void validarDestino(Posicao origem, Posicao destino)
+        {
+            if (!Tab.peca(origem).podeMoverPara(destino))
+            {
+                throw new TabuleiroException("Posição de Destino Invalida");
             }
         }
        
