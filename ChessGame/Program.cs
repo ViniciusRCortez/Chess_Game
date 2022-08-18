@@ -16,19 +16,24 @@ namespace ChessGame
                 {
                     Console.Clear();
                     Tela.imprimirTabuleiro(partidaDeXadrez.Tab);
-
-                    Console.Write("\n\nOrigem: ");
+                    
+                    Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
+                        + $" {partidaDeXadrez.JogadorAtual}s");
+                    Console.Write("\nOrigem: ");
                     Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+                    partidaDeXadrez.validarOrigem(origem);
 
                     bool[,] posicoesPossiveis = partidaDeXadrez.Tab.peca(origem).movimentosPossiveis();
 
                     Console.Clear();
                     Tela.imprimirTabuleiro(partidaDeXadrez.Tab, posicoesPossiveis);
 
-                    Console.Write("\n\nDestino: ");
+                    Console.WriteLine($"\n\nTurno {partidaDeXadrez.Turno}\nAguardando movimento das"
+                        + $" {partidaDeXadrez.JogadorAtual}s");
+                    Console.Write("\nDestino: ");
                     Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
 
-                    partidaDeXadrez.executarMovimento(origem, destino);
+                    partidaDeXadrez.realizaJogada(origem, destino);
                 }
                 
             }

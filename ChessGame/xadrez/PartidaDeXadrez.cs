@@ -11,8 +11,8 @@ namespace ChessGame.xadrez
     internal class PartidaDeXadrez
     {
         public Tabuleiro Tab { get; private set; }
-        private int Turno;
-        private Cor JogadorAtual;
+        public int Turno { get; private set; }
+        public Cor JogadorAtual { get; private set; }
         public bool Terminada { get; private set; }
 
         public PartidaDeXadrez()
@@ -25,12 +25,48 @@ namespace ChessGame.xadrez
         }
 
         public void executarMovimento(Posicao origem, Posicao destino)
-        {
+        {            
             Peca p = Tab.retirarPeca(origem);
+            
             p.imcrementarQteMovimentos();
             Peca pecaCapturada = Tab.retirarPeca(destino);
             Tab.colocarPeca(p, destino);
         }
+
+        public void realizaJogada(Posicao origem, Posicao destino)
+        {
+            validarOrigem(origem);
+            executarMovimento(origem, destino);
+            Turno++;
+            mudaJogador();
+        }
+
+        public void mudaJogador()
+        {
+            if (JogadorAtual == Cor.Branca)
+            {
+                JogadorAtual = Cor.Preta;
+            }
+            else if (JogadorAtual == Cor.Preta)
+            {
+                JogadorAtual = Cor.Branca;
+            }
+            else
+            {
+                throw new TabuleiroException("Jogador de Cor Invalida");
+            }
+        }
+
+        public void validarOrigem(Posicao origem)
+        {
+            if (!Tab.existePeca(origem))
+            {
+                throw new TabuleiroException("Origem invalida, não existe peça nessa posição");
+            }
+        }
+       
+
+
         private void colocarPecas()
         {
             /*Tab.colocarPeca(new Torre(Cor.Preta, Tab), new PosicaoXadrez('a', 8).toPosicao());

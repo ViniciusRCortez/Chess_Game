@@ -76,5 +76,7 @@ namespace ChessGame.tabuleiro
                 throw new TabuleiroException("Posição Invalida");
             }
         }
+
+        
     }
 }
