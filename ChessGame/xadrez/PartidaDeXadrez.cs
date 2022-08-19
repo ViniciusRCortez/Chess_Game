@@ -17,6 +17,7 @@ namespace ChessGame.xadrez
         public bool Xeque { get; private set; }
         private HashSet<Peca> Pecas;
         private HashSet<Peca> Capturadas;
+        public Peca vuneravelEnPassant { get; private set; }
 
         public PartidaDeXadrez()
         {
@@ -26,6 +27,7 @@ namespace ChessGame.xadrez
             Terminada = false;
             Pecas = new HashSet<Peca>();
             Capturadas = new HashSet<Peca>();
+            vuneravelEnPassant = null;
             Xeque = false;
             colocarPecas();
         }
@@ -63,8 +65,24 @@ namespace ChessGame.xadrez
                 T.imcrementarQteMovimentos();
                 Tab.colocarPeca(T, DestinoT);
             }
-
-
+            //JOGADA ESPECIAL ENPASSANT
+            if(p is Peao)
+            {
+                if (origem.Coluna != destino.Coluna && pecaCapturada == null)
+                {
+                    Posicao posP;
+                    if (p.Cor == Cor.Branca)
+                    {
+                        posP = new Posicao(destino.Linha + 1, destino.Coluna);
+                    }
+                    else
+                    {
+                        posP = new Posicao(destino.Linha - 1, destino.Coluna);
+                    }
+                    pecaCapturada = Tab.retirarPeca(posP);
+                    Capturadas.Add(pecaCapturada);
+                }
+            }
             return pecaCapturada;
         }
 
@@ -77,6 +95,22 @@ namespace ChessGame.xadrez
                 desfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroException("Você não pode se por em Xeque!");
             }
+            Peca p = Tab.peca(destino);
+
+            //JOGADA ESPECIAL PROMOÇÃO
+            if (p is Peao)
+            {
+                if ((p.Cor == Cor.Branca && destino.Linha == 0) || (p.Cor == Cor.Preta && destino.Linha == 7))
+                {
+                    p = Tab.retirarPeca(destino);
+                    Pecas.Remove(p);
+                    Peca dama = new Dama(p.Cor, Tab);
+                    Tab.colocarPeca(dama, destino);
+                    Pecas.Add(dama);
+                }
+            }
+
+
             if (emXeque(adversaria(JogadorAtual)))
             {
                 Xeque = true;
@@ -93,7 +127,16 @@ namespace ChessGame.xadrez
             {
                 Turno++;
                 mudaJogador();
+            }
 
+            //JOGADA ESPECIAL ENPASSANT
+            if (p is Peao && (destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2))
+            {
+                vuneravelEnPassant = p;
+            }
+            else
+            {
+                vuneravelEnPassant = null;
             }
 
         }
@@ -128,6 +171,24 @@ namespace ChessGame.xadrez
                 Peca T = Tab.retirarPeca(DestinoT);
                 T.decrementarQteMovimentos();
                 Tab.colocarPeca(T, OrigemT);
+            }
+            //JOGADA ESPECIAL ENPASSANT
+            if (p is Peao)
+            {
+                if (origem.Coluna != destino.Coluna && pecaCapturada == vuneravelEnPassant)
+                {
+                    Peca peao = Tab.retirarPeca(destino);
+                    Posicao posP;
+                    if (p.Cor == Cor.Branca)
+                    {
+                        posP = new Posicao(3, destino.Coluna);
+                    }
+                    else
+                    {
+                        posP = new Posicao(4 , destino.Coluna);
+                    }
+                    Tab.colocarPeca(peao, posP);                    
+                }
             }
         }
 
@@ -303,8 +364,8 @@ namespace ChessGame.xadrez
 
             foreach (char linha in linhasLetras)
             {
-                colocarNovaPeca(linha, 7, new Peao(Cor.Preta, Tab));
-                colocarNovaPeca(linha, 2, new Peao(Cor.Branca, Tab));
+                colocarNovaPeca(linha, 7, new Peao(Cor.Preta, Tab, this));
+                colocarNovaPeca(linha, 2, new Peao(Cor.Branca, Tab, this));
             }             
 
         }
