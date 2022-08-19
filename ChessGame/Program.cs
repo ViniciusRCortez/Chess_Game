@@ -1,6 +1,11 @@
 ﻿using ChessGame.tabuleiro;
 using ChessGame.xadrez;
 
+/*
+ PROXIMOS PASSOS:
+        1) Concertar problema de Xeque quando o Rei Adversario ainda pode Capturar
+        2) Permitir ao usuario que escolha a Peça a ser Transformada pela Promoção
+ */
 
 namespace ChessGame
 {
